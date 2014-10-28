@@ -2,7 +2,7 @@
 
 A JavaScript tool for resizing images using HTML5 Canvas.
 
-## Example
+## Example to create a 150x150 avatar
 ```
 // Inside a file input change event
 var file = e.target.files[0];
@@ -16,23 +16,25 @@ new Polysize(file, 150, function (img) {
 ## Parameters
 
 ### File
-File provided by a user (file input field, etc.)
+  - File provided by a user (file input field, etc.)
 
-### Size
-Array or integer (i.e. 75, [50, 100])
+### Bounds
+  - Array or integer (i.e. 75, [50, 100])
+  - The pixel size of the returned image element
 
-### Callback
+### Callback (3rd or 4th param)
 A function with a single parameter, img, which receives an image element.
 
-### Options
-  - **strategy:** string
-    - "stretch" - scale to size regardless of image stretching
+### Options (optional 3rd param)
+  - **sizing:** array or string
+    - Array option: [width, height]
+    - "crop" (default) - maintain ratio, scale to cover size and crop any overlap
     - "fit" - maintain ratio and fit within size
-    - "crop" - maintain ratio, scale to cover size and crop any overlap
+    - "stretch" - scale to size regardless of image stretching
   - **origin:** array or string
-    - where to scale from, either an array (i.e. [150, 150]), or a string
-      ("tl", "tc", "tr", "cl", "c", "cr", "bl", "bc", "br")
-    - NOTE: origin is not a supported option yet
+    - Centered by default
+    - Array option: [x, y]
+    - String options: "tl", "tc", "tr", "cl", "cr", "bl", "bc", "br"
 
 ---
 ## License

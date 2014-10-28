@@ -1,11 +1,9 @@
 window.Polysize = (function() {
 
-    function Polysize(file, size) {
-        var strategy,
-            origin,
-            options = {},
+    function Polysize(file, bounds) {
+        var options = {},
             callback,
-            reader = new FileReader;
+            reader = new FileReader();
 
         switch (arguments.length) {
         case 4:
@@ -18,82 +16,134 @@ window.Polysize = (function() {
         default:
             return alert(
                 'Invalid function call. Polysize expects 3 or 4 arguments.');
-            break;
         }
-        if (typeof(size) == 'number') size = [size, size];
-        strategy = options.strategy || 'crop';
-        origin = options.origin || 'c';
+        if (typeof(bounds) == 'number') bounds = [bounds, bounds];
 
         reader.onload = (function (f) { return function (e) {
-            var img = new Image;
-
-            img.src = e.target.result;
+            var img = new Image();
 
             img.onload = function (e) {
                 var canvas, ctx, data, w, h, x, y,
                     imgRatio = img.width / img.height,
-                    newRatio = size[0] / size[1];
+                    newRatio = bounds[0] / bounds[1];
 
-                switch (strategy) {
-                case 'stretch':
-                    w = size[0];
-                    h = size[1];
-                    x = 0;
-                    y = 0;
-                    break;
+                switch (typeof(options.sizing)) {
+                case 'object':
+                    if (options.sizing.length !== 2) return alert(
+                        "`sizing` must be a string or an array with 2 values.");
+                    if (options.sizing[0] * options.sizing[1] === 0) return alert(
+                        "`sizing` must have positive width and height.");
+                    canvas = document.createElement('canvas');
+                    canvas.width = options.sizing[0];
+                    canvas.height = options.sizing[1];
+                    ctx = canvas.getContext('2d');
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.webkitImageSmoothingEnabled = true;
+                    ctx.mozImageSmoothingEnabled = true;
+                    ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,
+                        options.sizing[0], options.sizing[1]);
+                    img.src = canvas.toDataURL();
+                    delete options.sizing;
+                    return;
 
-                case 'fit':
-                    if (imgRatio > newRatio) {
-                        w = size[0];
-                        h = img.height / img.width * size[1];
-                        x = 0;
-                        y = (size[1] - h) / 2;
-                    } else if (imgRatio < newRatio) {
-                        w = img.width / img.height * size[0];
-                        h = size[1];
-                        x = (size[0] - w) / 2;
-                        y = 0;
-                    } else {
-                        w = size[0];
-                        h = size[1];
-                        x = 0;
-                        y = 0;
+                case 'string':
+                case 'undefined':
+                    switch (options.sizing) {
+                    case 'stretch':
+                        w = bounds[0];
+                        h = bounds[1];
+                        break;
+
+                    case 'fit':
+                        if (imgRatio > newRatio) {
+                            w = bounds[0];
+                            h = img.height / img.width * bounds[1];
+                        } else if (imgRatio < newRatio) {
+                            w = img.width / img.height * bounds[0];
+                            h = bounds[1];
+                        } else {
+                            w = bounds[0];
+                            h = bounds[1];
+                        }
+                        break;
+
+                    // crop by default
+                    default:
+                        if (imgRatio > newRatio) {
+                            w = img.width / img.height * bounds[0];
+                            h = bounds[1];
+                        } else if (imgRatio < newRatio) {
+                            w = bounds[0];
+                            h = img.height / img.width * bounds[1];
+                        } else {
+                            w = bounds[0];
+                            h = bounds[1];
+                        }
+                        break;
                     }
                     break;
 
-                case 'crop':
                 default:
-                    if (imgRatio > newRatio) {
-                        w = img.width / img.height * size[0];
-                        h = size[1];
-                        x = (w - size[0]) / -2;
+                    return alert(
+                        "Invalid option `sizing`. Must be a string or array.");
+                }
+
+                switch (typeof(options.origin)) {
+                case 'string':
+                    switch (options.origin[0]) {
+                    case 't':
                         y = 0;
-                    } else if (imgRatio < newRatio) {
-                        w = size[0];
-                        h = img.height / img.width * size[1];
-                        x = 0;
-                        y = (h - size[1]) / -2;
-                    } else {
-                        w = size[0];
-                        h = size[1];
-                        x = 0;
-                        y = 0;
+                        break;
+                    case 'c':
+                        y = (bounds[1] - h) / 2;
+                        break;
+                    case 'b':
+                        y = bounds[1] - h;
+                        break;
+                    default:
+                        return alert(
+                            "Invalid Polysize `origin` option.");
                     }
+                    switch (options.origin[1]) {
+                    case 'l':
+                        x = 0;
+                        break;
+                    case 'c':
+                        x = (bounds[0] - w) / 2;
+                        break;
+                    case 'r':
+                        x = bounds[0] - w;
+                        break;
+                    default:
+                        return alert(
+                            "Invalid Polysize `origin` option.");
+                    }
+                    break;
+
+                case 'object':
+                    return alert(
+                        "`origin` of type `array` is not supported yet.");
+
+                default:
+                    x = (bounds[0] - w) / 2;
+                    y = (bounds[1] - h) / 2;
                     break;
                 }
 
                 canvas = document.createElement('canvas');
-                canvas.width = size[0];
-                canvas.height = size[1];
+                canvas.width = bounds[0];
+                canvas.height = bounds[1];
                 ctx = canvas.getContext('2d');
                 ctx.imageSmoothingEnabled = true;
                 ctx.webkitImageSmoothingEnabled = true;
                 ctx.mozImageSmoothingEnabled = true;
                 ctx.drawImage(img, 0, 0, img.width, img.height, x, y, w, h);
+                img.src = canvas.toDataURL();
 
-                img.src = canvas.toDataURL()
-                if (callback != null) callback(img);
+                if (typeof(callback) === 'function') callback(img);
             };
+            img.src = e.target.result;
+
         }; })(file);
         reader.readAsDataURL(file);
     }
