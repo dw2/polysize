@@ -6,7 +6,8 @@ A JavaScript tool for resizing images using HTML5 Canvas.
 ```
 // Inside a file input change event
 var file = e.target.files[0];
-new Polysize(file, size, function (img) {
+// Create a 150 pixel sized avatar based on the image
+new Polysize(file, 150, function (img) {
     console.log("Look, an image element:", img);
     // Do something with img
 });
