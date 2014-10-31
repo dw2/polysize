@@ -47,7 +47,7 @@ window.Polysize = (function() {
                         options.sizing[0], options.sizing[1]);
                     img.onload = handleImageLoad;
                     img.src = canvas.toDataURL();
-                    delete options.sizing;
+                    options.sizing = 'none';
                     return;
 
                 case 'string':
@@ -69,6 +69,11 @@ window.Polysize = (function() {
                             w = bounds[0];
                             h = bounds[1];
                         }
+                        break;
+
+                    case 'none':
+                        w = img.width;
+                        h = img.height;
                         break;
 
                     // crop by default
