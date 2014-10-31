@@ -31,7 +31,7 @@ A function with a single parameter, img, which receives an image element.
     - "crop" (default) - maintain ratio, scale to cover size and crop any overlap
     - "fit" - maintain ratio and fit within size
     - "stretch" - scale to size regardless of image stretching
-  - **origin:** array or string
+  - **offset:** array or string
     - Centered by default
     - Array option: [x, y]
     - String options: "tl", "tc", "tr", "cl", "cr", "bl", "bc", "br"

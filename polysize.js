@@ -90,9 +90,9 @@ window.Polysize = (function() {
                         "Invalid option `sizing`. Must be a string or array.");
                 }
 
-                switch (typeof(options.origin)) {
+                switch (typeof(options.offset)) {
                 case 'string':
-                    switch (options.origin[0]) {
+                    switch (options.offset[0]) {
                     case 't':
                         y = 0;
                         break;
@@ -104,9 +104,9 @@ window.Polysize = (function() {
                         break;
                     default:
                         return alert(
-                            "Invalid Polysize `origin` option.");
+                            "Invalid Polysize `offset` option.");
                     }
-                    switch (options.origin[1]) {
+                    switch (options.offset[1]) {
                     case 'l':
                         x = 0;
                         break;
@@ -118,13 +118,14 @@ window.Polysize = (function() {
                         break;
                     default:
                         return alert(
-                            "Invalid Polysize `origin` option.");
+                            "Invalid Polysize `offset` option.");
                     }
                     break;
 
                 case 'object':
-                    return alert(
-                        "`origin` of type `array` is not supported yet.");
+                    x = options.offset[0];
+                    y = options.offset[1];
+                    break;
 
                 default:
                     x = (bounds[0] - w) / 2;
