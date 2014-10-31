@@ -27,6 +27,8 @@ window.Polysize = (function() {
                     imgRatio = img.width / img.height,
                     newRatio = bounds[0] / bounds[1];
 
+                img.onload = null;// prevent endless loop cases
+
                 switch (typeof(options.sizing)) {
                 case 'object':
                     if (options.sizing.length !== 2) return alert(
