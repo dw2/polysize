@@ -20,9 +20,10 @@ window.Polysize = (function() {
         if (typeof(bounds) === 'number') bounds = [bounds, bounds];
 
         reader.onload = (function (f) { return function (e) {
-            var img = new Image();
+            var img = new Image(),
+                handleImageLoad;
 
-            img.onload = function (e) {
+            handleImageLoad = function (e) {
                 var canvas, ctx, data, w, h, x, y,
                     imgRatio = img.width / img.height,
                     newRatio = bounds[0] / bounds[1];
@@ -44,6 +45,7 @@ window.Polysize = (function() {
                     ctx.mozImageSmoothingEnabled = true;
                     ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,
                         options.sizing[0], options.sizing[1]);
+                    img.onload = handleImageLoad;
                     img.src = canvas.toDataURL();
                     delete options.sizing;
                     return;
@@ -145,6 +147,7 @@ window.Polysize = (function() {
 
                 if (typeof(callback) === 'function') callback(img);
             };
+            img.onload = handleImageLoad;
             img.src = e.target.result;
 
         }; })(file);
