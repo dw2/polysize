@@ -17,7 +17,7 @@ window.Polysize = (function() {
             return alert(
                 'Invalid function call. Polysize expects 3 or 4 arguments.');
         }
-        if (typeof(bounds) == 'number') bounds = [bounds, bounds];
+        if (typeof(bounds) === 'number') bounds = [bounds, bounds];
 
         reader.onload = (function (f) { return function (e) {
             var img = new Image();
@@ -59,10 +59,10 @@ window.Polysize = (function() {
                     case 'fit':
                         if (imgRatio > newRatio) {
                             w = bounds[0];
-                            h = img.height / img.width * bounds[1];
+                            h = w / imgRatio;
                         } else if (imgRatio < newRatio) {
-                            w = img.width / img.height * bounds[0];
                             h = bounds[1];
+                            w = h * imgRatio;
                         } else {
                             w = bounds[0];
                             h = bounds[1];
@@ -72,11 +72,11 @@ window.Polysize = (function() {
                     // crop by default
                     default:
                         if (imgRatio > newRatio) {
-                            w = img.width / img.height * bounds[0];
                             h = bounds[1];
+                            w = h * imgRatio;
                         } else if (imgRatio < newRatio) {
                             w = bounds[0];
-                            h = img.height / img.width * bounds[1];
+                            h = w / imgRatio;
                         } else {
                             w = bounds[0];
                             h = bounds[1];
