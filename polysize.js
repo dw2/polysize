@@ -46,7 +46,7 @@ window.Polysize = (function() {
                     ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,
                         options.sizing[0], options.sizing[1]);
                     img.onload = handleImageLoad;
-                    img.src = canvas.toDataURL();
+                    img.src = canvas.toDataURL('image/jpeg');
                     options.sizing = 'none';
                     return;
 
@@ -148,7 +148,7 @@ window.Polysize = (function() {
                 ctx.webkitImageSmoothingEnabled = true;
                 ctx.mozImageSmoothingEnabled = true;
                 ctx.drawImage(img, 0, 0, img.width, img.height, x, y, w, h);
-                img.src = canvas.toDataURL();
+                img.src = canvas.toDataURL('image/jpeg');
 
                 if (typeof(callback) === 'function') callback(img);
             };
