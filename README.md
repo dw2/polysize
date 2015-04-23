@@ -36,6 +36,11 @@ A function with a single parameter, img, which receives an image element.
     - Array option: [x, y]
     - String options: "tl", "tc", "tr", "cl", "cr", "bl", "bc", "br"
 
+## Notes
+
+### Rails
+To add Polysize to your rails project, checkout the [Polysize-Rails Gem](https://github.com/dw2/polysize-rails)
+
 ---
 ## License
 MIT
