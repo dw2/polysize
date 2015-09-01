@@ -41,10 +41,10 @@ window.Polysize = (function() {
                     canvas.height = options.sizing[1];
                     ctx = canvas.getContext('2d');
                     if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
+                        ctx.imageSmoothingEnabled = true;
+                    } else {
                         ctx.webkitImageSmoothingEnabled = true;
                         ctx.mozImageSmoothingEnabled = true;
-                    } else {
-                        ctx.imageSmoothingEnabled = true;
                     }
                     ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,
                         options.sizing[0], options.sizing[1]);
@@ -148,10 +148,10 @@ window.Polysize = (function() {
                 canvas.height = bounds[1];
                 ctx = canvas.getContext('2d');
                 if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
+                    ctx.imageSmoothingEnabled = true;
+                } else {
                     ctx.webkitImageSmoothingEnabled = true;
                     ctx.mozImageSmoothingEnabled = true;
-                } else {
-                    ctx.imageSmoothingEnabled = true;
                 }
                 ctx.drawImage(img, 0, 0, img.width, img.height, x, y, w, h);
                 img.src = canvas.toDataURL('image/jpeg');
