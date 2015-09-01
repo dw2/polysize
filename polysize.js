@@ -40,9 +40,12 @@ window.Polysize = (function() {
                     canvas.width = options.sizing[0];
                     canvas.height = options.sizing[1];
                     ctx = canvas.getContext('2d');
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.webkitImageSmoothingEnabled = true;
-                    ctx.mozImageSmoothingEnabled = true;
+                    if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
+                        ctx.webkitImageSmoothingEnabled = true;
+                        ctx.mozImageSmoothingEnabled = true;
+                    } else {
+                        ctx.imageSmoothingEnabled = true;
+                    }
                     ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,
                         options.sizing[0], options.sizing[1]);
                     img.onload = handleImageLoad;
