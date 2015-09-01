@@ -147,9 +147,12 @@ window.Polysize = (function() {
                 canvas.width = bounds[0];
                 canvas.height = bounds[1];
                 ctx = canvas.getContext('2d');
-                ctx.imageSmoothingEnabled = true;
-                ctx.webkitImageSmoothingEnabled = true;
-                ctx.mozImageSmoothingEnabled = true;
+                if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
+                    ctx.webkitImageSmoothingEnabled = true;
+                    ctx.mozImageSmoothingEnabled = true;
+                } else {
+                    ctx.imageSmoothingEnabled = true;
+                }
                 ctx.drawImage(img, 0, 0, img.width, img.height, x, y, w, h);
                 img.src = canvas.toDataURL('image/jpeg');
 
