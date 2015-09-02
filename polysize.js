@@ -62,6 +62,7 @@ window.Polysize = (function() {
                         break;
 
                     case 'fit':
+                    case 'cinch':
                         if (imgRatio > newRatio) {
                             w = bounds[0];
                             h = w / imgRatio;
@@ -145,7 +146,12 @@ window.Polysize = (function() {
 
                 canvas = document.createElement('canvas');
                 canvas.width = bounds[0];
-                canvas.height = bounds[1];
+                if (options.sizing === 'cinch') {
+                    canvas.height = h;
+                    y = 0;
+                } else {
+                    canvas.height =  bounds[1];
+                }
                 ctx = canvas.getContext('2d');
                 if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
                     ctx.imageSmoothingEnabled = true;

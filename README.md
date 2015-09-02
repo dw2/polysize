@@ -28,8 +28,9 @@ A function with a single parameter, img, which receives an image element.
 ### Options (optional 3rd param)
   - **sizing:** array or string
     - Array option: [width, height]
-    - "crop" (default) - maintain ratio, scale to cover size and crop any overlap
+    - "crop" (default) - maintain ratio, scale to cover bounds and crop any overlap
     - "fit" - maintain ratio and fit within size
+    - "cinch" - similar to "fit", except the bounds are also cropped to match the aspect ratio of the scaled image
     - "stretch" - scale to size regardless of image stretching
   - **offset:** array or string
     - Centered by default
