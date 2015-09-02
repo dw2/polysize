@@ -145,11 +145,13 @@ window.Polysize = (function() {
                 }
 
                 canvas = document.createElement('canvas');
-                canvas.width = bounds[0];
                 if (options.sizing === 'cinch') {
+                    canvas.width = w;
                     canvas.height = h;
+                    x = 0
                     y = 0;
                 } else {
+                    canvas.width = bounds[0];
                     canvas.height =  bounds[1];
                 }
                 ctx = canvas.getContext('2d');
