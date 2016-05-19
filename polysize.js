@@ -21,7 +21,9 @@ window.Polysize = (function() {
 
         reader.onload = (function (f) { return function (e) {
             var img = new Image(),
+                type = 'image/jpeg',
                 handleImageLoad;
+            if (f.type.match('png')) type = 'image/png';
 
             handleImageLoad = function (e) {
                 var canvas, ctx, data, w, h, x, y,
@@ -40,7 +42,6 @@ window.Polysize = (function() {
                     canvas.width = options.sizing[0];
                     canvas.height = options.sizing[1];
                     ctx = canvas.getContext('2d');
-                    ctx.globalAlpha = 0;
                     if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
                         ctx.imageSmoothingEnabled = true;
                     } else {
@@ -156,7 +157,6 @@ window.Polysize = (function() {
                     canvas.height =  bounds[1];
                 }
                 ctx = canvas.getContext('2d');
-                ctx.globalAlpha = 0;
                 if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
                     ctx.imageSmoothingEnabled = true;
                 } else {
@@ -164,7 +164,7 @@ window.Polysize = (function() {
                     ctx.mozImageSmoothingEnabled = true;
                 }
                 ctx.drawImage(img, 0, 0, img.width, img.height, x, y, w, h);
-                img.src = canvas.toDataURL('image/jpeg');
+                img.src = canvas.toDataURL(type);
 
                 if (typeof(callback) === 'function') callback(img);
             };
