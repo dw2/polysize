@@ -37,9 +37,11 @@ window.Polysize = (function() {
                     if (options.sizing[0] * options.sizing[1] === 0) return alert(
                         "`sizing` must have positive width and height.");
                     canvas = document.createElement('canvas');
+                    canvas.globalAlpha = 0;
                     canvas.width = options.sizing[0];
                     canvas.height = options.sizing[1];
                     ctx = canvas.getContext('2d');
+                    ctx.globalAlpha = 0;
                     if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
                         ctx.imageSmoothingEnabled = true;
                     } else {
@@ -145,6 +147,7 @@ window.Polysize = (function() {
                 }
 
                 canvas = document.createElement('canvas');
+                canvas.globalAlpha = 0;
                 if (options.sizing === 'cinch') {
                     canvas.width = w;
                     canvas.height = h;
@@ -155,6 +158,7 @@ window.Polysize = (function() {
                     canvas.height =  bounds[1];
                 }
                 ctx = canvas.getContext('2d');
+                ctx.globalAlpha = 0;
                 if (typeof(ctx.imageSmoothingEnabled) !== 'undefined') {
                     ctx.imageSmoothingEnabled = true;
                 } else {
