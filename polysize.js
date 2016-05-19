@@ -37,7 +37,6 @@ window.Polysize = (function() {
                     if (options.sizing[0] * options.sizing[1] === 0) return alert(
                         "`sizing` must have positive width and height.");
                     canvas = document.createElement('canvas');
-                    canvas.globalAlpha = 0;
                     canvas.width = options.sizing[0];
                     canvas.height = options.sizing[1];
                     ctx = canvas.getContext('2d');
@@ -147,7 +146,6 @@ window.Polysize = (function() {
                 }
 
                 canvas = document.createElement('canvas');
-                canvas.globalAlpha = 0;
                 if (options.sizing === 'cinch') {
                     canvas.width = w;
                     canvas.height = h;
